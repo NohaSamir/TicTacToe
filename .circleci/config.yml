@@ -1,10 +1,8 @@
-# This config was automatically generated from your source code
-# Stacks detected: deps:java:.,tool:gradle:
 version: 2.1
 jobs:
-  test-java:
+  build-and-test:
     docker:
-      - image: cimg/openjdk:17.0
+      - image: circleci/android:api-30
     steps:
       - checkout
       - run:
@@ -15,7 +13,11 @@ jobs:
       - restore_cache:
           key: cache-{{ checksum "/tmp/CIRCLECI_CACHE_KEY" }}
       - run:
-          command: ./gradlew check
+          name: Run Unit Tests
+          command: ./gradlew test
+      - run:
+          name: Build APK
+          command: ./gradlew assembleDebug
       - store_test_results:
           path: build/test-results
       - save_cache:
@@ -23,7 +25,7 @@ jobs:
           paths:
             - ~/.gradle/caches
       - store_artifacts:
-          path: build/reports
+          path: build/outputs/apk/debug
   deploy:
     # This is an example deploy job, not actually used by the workflow
     docker:
@@ -36,7 +38,7 @@ jobs:
 workflows:
   build-and-test:
     jobs:
-      - test-java
+      - build-and-test
     # - deploy:
     #     requires:
     #       - test-java
