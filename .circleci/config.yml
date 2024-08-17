@@ -29,6 +29,7 @@ jobs:
   release-build:
     executor:
       name: android/android-machine
+      tag: 2022.08.1
       resource-class: xlarge
     steps:
       - checkout
