@@ -5,7 +5,7 @@ jobs:
   unit-test:
     executor:
       name: android/android-docker
-      tag: 2022.08.1
+      tag: 2024.04.1
     steps:
       - checkout
       - run:
@@ -29,8 +29,10 @@ jobs:
   release-build:
     executor:
       name: android/android-machine
-      tag: 2022.08.1
+      tag: 2024.04.1
     steps:
+      - requires:
+          - unit-test
       - checkout
       - run:
           name: Grant execute permission to Gradle wrapper
