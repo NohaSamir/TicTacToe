@@ -27,8 +27,6 @@ jobs:
           path: ~/test-results/junit
 
   release-build:
-    requires:
-      - unit-test
     executor:
       name: android/android-machine
       tag: 2024.04.1
@@ -49,4 +47,6 @@ workflows:
   test-and-build:
     jobs:
       - unit-test
-      - release-build
+      - release-build:
+          requires:
+            - unit-test
