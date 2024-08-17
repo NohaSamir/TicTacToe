@@ -32,6 +32,9 @@ jobs:
       tag: 2022.08.1
     steps:
       - checkout
+      - run:
+          name: Grant execute permission to Gradle wrapper
+          command: chmod +x ./gradlew
       - android/restore-gradle-cache
       - android/restore-build-cache
       - run:
