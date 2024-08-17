@@ -27,12 +27,12 @@ jobs:
           path: ~/test-results/junit
 
   release-build:
+    requires:
+      - unit-test
     executor:
       name: android/android-machine
       tag: 2024.04.1
     steps:
-      - requires:
-          - unit-test
       - checkout
       - run:
           name: Grant execute permission to Gradle wrapper
